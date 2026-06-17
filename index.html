@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#08110c" />
+  <title>캐릭터 난투</title>
+  <link rel="icon" href="favicon.ico" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="캐릭터 난투" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app"></div>
+  <div id="modal-root"></div>
+  <div id="toast-root"></div>
+
+  <script>
+    (function () {
+      const app = document.getElementById('app');
+
+      function showFileModeGuide() {
+        app.innerHTML = `
+          <div class="center-shell">
+            <div class="auth-card card">
+              <div class="brand-wrap">
+                <span class="brand-chip">실행 방식 안내</span>
+                <h1 class="brand-title">Character PVP</h1>
+                <p class="brand-sub">
+                  지금은 file:/// 방식으로 열려 있어서 Chrome 보안 정책 때문에 Firebase, 모듈 JS, manifest, 캐시 기능이 막힙니다.
+                  아래 방법 중 하나로 실행하면 됩니다.
+                </p>
+              </div>
+              <div class="stack">
+                <div class="feature-card highlight">
+                  <h3 class="feature-title">가장 쉬운 실행법</h3>
+                  <p class="feature-meta">
+                    압축을 푼 폴더에서 <strong>start_server.cmd</strong> 파일을 더블클릭한 뒤,
+                    자동으로 열리는 <strong>http://localhost:8080</strong> 주소에서 실행하세요.
+                  </p>
+                </div>
+                <div class="feature-card">
+                  <h3 class="feature-title">수동 실행법</h3>
+                  <p class="feature-meta">
+                    폴더 주소창에 cmd 입력 → 엔터 → 아래 명령어 입력
+                  </p>
+                  <div class="text-input" style="user-select:all;">python -m http.server 8080</div>
+                  <p class="feature-meta">그 다음 Chrome에서 http://localhost:8080 접속</p>
+                </div>
+                <a class="btn primary block" href="offline_demo.html">서버 없이 오프라인 데모 실행</a>
+                <p class="inline-note">
+                  GitHub Pages에 올리면 https 주소로 실행되기 때문에 이 문제가 발생하지 않습니다. Firebase 온라인 기능은 http/https에서 실행해야 합니다.
+                </p>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      function addManifest() {
+        const link = document.createElement('link');
+        link.rel = 'manifest';
+        link.href = 'manifest.json';
+        document.head.appendChild(link);
+      }
+
+      async function loadApp() {
+        try {
+          addManifest();
+          await import('./src/app.js');
+        } catch (error) {
+          console.error(error);
+          app.innerHTML = `
+            <div class="center-shell">
+              <div class="auth-card card">
+                <h1 class="brand-title">앱 로드 실패</h1>
+                <p class="brand-sub">
+                  파일은 불러왔지만 앱 초기화 중 오류가 발생했습니다. 콘솔의 첫 번째 오류를 확인해주세요.
+                </p>
+                <div class="feature-card" style="margin-top:16px;">
+                  <p class="feature-meta">${String(error && error.message ? error.message : error)}</p>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+      }
+
+      if (location.protocol === 'file:') {
+        showFileModeGuide();
+      } else {
+        loadApp();
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid"
+      }
+    },
+    "friendlyRooms": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "publicProfiles": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "globalChat": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    }
+  }
+}

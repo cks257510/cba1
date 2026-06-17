@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>캐릭터 난투 Cache Clear</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="center-shell">
+  <div class="auth-card card">
+    <div class="brand-wrap">
+      <span class="brand-chip">캐시 초기화</span>
+      <h1 class="brand-title">캐릭터 난투</h1>
+      <p class="brand-sub">
+        캐시 초기화는 file:/// 더블클릭 상태가 아니라
+        http://127.0.0.1:8080 또는 GitHub Pages 주소에서 실행해야 합니다.
+      </p>
+    </div>
+
+    <div id="file-guide" class="stack" style="display:none;">
+      <div class="feature-card highlight">
+        <h3 class="feature-title">지금은 file:/// 상태입니다</h3>
+        <p class="feature-meta">
+          현재 주소의 origin이 null이라 Service Worker와 Cache API를 사용할 수 없습니다.
+          아래 순서대로 다시 실행하세요.
+        </p>
+      </div>
+      <div class="feature-card">
+        <p class="feature-meta">
+          1. 폴더에서 start_server.cmd 실행<br>
+          2. 검은 창 또는 PowerShell 창을 닫지 않기<br>
+          3. Chrome에서 아래 주소 접속
+        </p>
+        <div class="text-input" style="user-select:all;">http://127.0.0.1:8080/clear_cache.html</div>
+      </div>
+      <a class="btn secondary block" href="offline_demo.html">서버 없이 오프라인 데모 열기</a>
+    </div>
+
+    <div id="http-guide" class="stack">
+      <button id="clear" class="btn primary block">캐시 초기화 실행</button>
+      <a class="btn secondary block" href="index.html">게임으로 이동</a>
+      <p id="status" class="inline-note"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const status = document.getElementById('status');
+  const fileGuide = document.getElementById('file-guide');
+  const httpGuide = document.getElementById('http-guide');
+
+  if (location.protocol === 'file:') {
+    fileGuide.style.display = 'flex';
+    httpGuide.style.display = 'none';
+    return;
+  }
+
+  document.getElementById('clear').onclick = async () => {
+    status.textContent = '초기화 중...';
+
+    try {
+      let swCount = 0;
+      let cacheCount = 0;
+
+      if ('serviceWorker' in navigator && navigator.serviceWorker.getRegistrations) {
+        const regs = await navigator.serviceWorker.getRegistrations();
+        swCount = regs.length;
+        await Promise.all(regs.map(r => r.unregister()));
+      }
+
+      if ('caches' in window) {
+        const keys = await caches.keys();
+        cacheCount = keys.length;
+        await Promise.all(keys.map(k => caches.delete(k)));
+      }
+
+      localStorage.removeItem('character_pvp_offline');
+
+      status.textContent =
+        '완료. Service Worker ' + swCount + '개, Cache ' + cacheCount +
+        '개를 초기화했습니다. 이제 게임으로 이동한 뒤 Ctrl+F5로 새로고침하세요.';
+    } catch (e) {
+      status.textContent = '오류: ' + (e && e.message ? e.message : String(e));
+    }
+  };
+})();
+</script>
+</body>
+</html>

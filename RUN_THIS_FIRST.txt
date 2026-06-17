@@ -1,0 +1,27 @@
+Character PVP region fixed version
+
+Database URL fixed:
+https://character1-default-rtdb.asia-southeast1.firebasedatabase.app
+
+If loading is still long:
+1. Open clear_cache.html
+2. Click cache clear button
+3. Open http://127.0.0.1:8080/index.html
+4. Press Ctrl+F5
+
+Character PVP run instructions
+
+Best option:
+1. Double-click start_server.cmd
+2. Wait 3 seconds
+3. Open http://127.0.0.1:8080/index.html
+
+If the browser says connection refused:
+1. Check if a new PowerShell server window is open.
+2. If not, open offline_demo.html for UI-only demo mode.
+3. For online Firebase mode, upload this folder to GitHub Pages.
+
+Manual Python command:
+py -3 -m http.server 8080 --bind 127.0.0.1
+
+Do not use file:// index.html for online mode.

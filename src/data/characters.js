@@ -1,0 +1,347 @@
+export const CHARACTER_LIST = [
+  {
+    id: 'luffy',
+    name: '루피',
+    englishName: 'Luffy',
+    image: 'assets/skins/Luffy.png',
+    role: '근접',
+    classType: 'control',
+    attackType: 'melee',
+    skill1: { name: '고무고무', image: 'assets/skills/GumGum.png', description: '전방으로 길게 뻗는 충격파를 발사합니다.' },
+    ultimate: { name: '고무고무', image: 'assets/skills/GumGum.png', description: '고무고무 연타가 터지며 큰 피해를 줍니다.' },
+    baseStats: { attack: 101, hp: 1085, gauge: 100 },
+    shopPrice: 2600,
+    rarity: '희귀'
+  },
+  {
+    id: 'zoro',
+    name: '조로',
+    englishName: 'Zoro',
+    image: 'assets/skins/Zoro.png',
+    role: '근접',
+    classType: 'control',
+    attackType: 'melee',
+    skill1: { name: '호랑이 사냥', image: 'assets/skills/TigerHunt.png', description: '검기를 크게 그리며 전진합니다.' },
+    ultimate: { name: '호랑이 사냥', image: 'assets/skills/TigerHunt.png', description: '넓은 범위에 호랑이 사냥을 난사합니다.' },
+    baseStats: { attack: 103, hp: 1070, gauge: 100 },
+    shopPrice: 2900,
+    rarity: '희귀'
+  },
+  {
+    id: 'sanji',
+    name: '상디',
+    englishName: 'Sanji',
+    image: 'assets/skins/Sanji.png',
+    role: '근접',
+    classType: 'control',
+    attackType: 'melee',
+    skill1: { name: '디아블 킥', image: 'assets/skills/Forearm.png', description: '빠른 연속 킥을 가합니다.' },
+    ultimate: { name: '연속 킥', image: 'assets/skills/Forearm.png', description: '적을 쫓아가며 연속 킥을 날립니다.' },
+    baseStats: { attack: 100, hp: 1065, gauge: 100 },
+    shopPrice: 2800,
+    rarity: '희귀'
+  },
+  {
+    id: 'blitzcrank',
+    name: '블리츠크랭크',
+    englishName: 'Blitzcrank',
+    image: 'assets/skins/Blitzcrank.png',
+    role: '원거리',
+    classType: 'auto',
+    attackType: 'projectile',
+    skill1: { name: '그랩', image: 'assets/skills/Grab.png', description: '그랩으로 적을 끌어옵니다.' },
+    ultimate: { name: '그랩', image: 'assets/skills/Grab.png', description: '난사되는 그랩이 적을 강하게 휘감습니다.' },
+    baseStats: { attack: 99, hp: 1100, gauge: 100 },
+    shopPrice: 2500,
+    rarity: '희귀'
+  },
+  {
+    id: 'choijun',
+    name: '최준',
+    englishName: 'ChoiJun',
+    image: 'assets/skins/ChoiJun.png',
+    role: '근접',
+    classType: 'control',
+    attackType: 'melee',
+    skill1: { name: '근성 러시', image: 'assets/skills/Forearm.png', description: '근성으로 밀어붙이며 연속 타격합니다.' },
+    ultimate: { name: '근성 폭발', image: 'assets/skills/Forearm.png', description: '짧은 시간 공격력이 크게 상승합니다.' },
+    baseStats: { attack: 101, hp: 1080, gauge: 100 },
+    shopPrice: 2400,
+    rarity: '일반'
+  },
+  {
+    id: 'yoonsung',
+    name: '윤성',
+    englishName: 'YoonSung',
+    image: 'assets/skins/YoonSung.png',
+    role: '근접',
+    classType: 'auto',
+    attackType: 'melee',
+    skill1: { name: '팔뚝', image: 'assets/skills/Forearm.png', description: '팔뚝 일격으로 적을 밀어냅니다.' },
+    ultimate: { name: '팔뚝', image: 'assets/skills/Forearm.png', description: '강한 일격이 연속으로 발동됩니다.' },
+    baseStats: { attack: 100, hp: 1090, gauge: 100 },
+    shopPrice: 2500,
+    rarity: '일반'
+  },
+  {
+    id: 'zed',
+    name: '제드',
+    englishName: 'Zed',
+    image: 'assets/skins/Zed.png',
+    role: '원거리',
+    classType: 'control',
+    attackType: 'projectile',
+    skill1: { name: '표창', image: 'assets/skills/Shuriken.png', description: '표창을 던져 적을 공격합니다.' },
+    ultimate: { name: '표창', image: 'assets/skills/Shuriken.png', description: '표창 난사가 무작위로 날아다닙니다.' },
+    baseStats: { attack: 102, hp: 1055, gauge: 100 },
+    shopPrice: 3000,
+    rarity: '에픽'
+  },
+  {
+    id: 'taric',
+    name: '타릭',
+    englishName: 'Taric',
+    image: 'assets/skins/Taric.png',
+    role: '근접',
+    classType: 'control',
+    attackType: 'melee',
+    skill1: { name: '타릭기절', image: 'assets/skills/TaricStun.png', description: '보석 광선으로 기절을 유발합니다.' },
+    ultimate: { name: '타릭기절', image: 'assets/skills/TaricStun.png', description: '기절 광선이 적을 연속 타격합니다.' },
+    baseStats: { attack: 98, hp: 1110, gauge: 100 },
+    shopPrice: 2700,
+    rarity: '희귀'
+  },
+  {
+    id: 'batohtani',
+    name: '빠따든 오타니',
+    englishName: 'BatOhtani',
+    image: 'assets/skins/BatOhtani.png',
+    role: '근접',
+    classType: 'auto',
+    attackType: 'melee',
+    skill1: { name: '빠따', image: 'assets/skills/Bat.png', description: '빠따 스윙으로 근접 범위를 타격합니다.' },
+    ultimate: { name: '빠따', image: 'assets/skills/Bat.png', description: '5초간 빠따가 원형으로 회전하며 적을 타격합니다.' },
+    baseStats: { attack: 103, hp: 1060, gauge: 100 },
+    shopPrice: 3400,
+    rarity: '에픽'
+  },
+  {
+    id: 'ngannou',
+    name: '은가누',
+    englishName: 'Ngannou',
+    image: 'assets/skins/Ngannou.png',
+    role: '근접',
+    classType: 'auto',
+    attackType: 'melee',
+    skill1: { name: '헤비펀치', image: 'assets/skills/Forearm.png', description: '강한 헤비펀치로 돌진합니다.' },
+    ultimate: { name: '파워 러시', image: 'assets/skills/Forearm.png', description: '파워 러시가 자동으로 이어집니다.' },
+    baseStats: { attack: 104, hp: 1085, gauge: 100 },
+    shopPrice: 3600,
+    rarity: '에픽'
+  },
+  {
+    id: 'duolingo',
+    name: '듀오링고',
+    englishName: 'Duolingo',
+    image: 'assets/skins/Duolingo.png',
+    role: '원거리',
+    classType: 'auto',
+    attackType: 'projectile',
+    skill1: { name: '알림 폭격', image: 'assets/skills/Grab.png', description: '도망갈 수 없는 추적 공격.' },
+    ultimate: { name: '집요한 추적', image: 'assets/skills/Grab.png', description: '집요한 추적체가 적을 따라갑니다.' },
+    baseStats: { attack: 97, hp: 1120, gauge: 100 },
+    shopPrice: 2300,
+    rarity: '일반'
+  },
+  {
+    id: 'spiderman',
+    name: '스파이더맨',
+    englishName: 'SpiderMan',
+    image: 'assets/skins/SpiderMan.png',
+    role: '원거리',
+    classType: 'control',
+    attackType: 'projectile',
+    skill1: { name: '거미줄', image: 'assets/skills/SpiderWeb.png', description: '거미줄을 발사해 적을 묶습니다.' },
+    ultimate: { name: '거미줄', image: 'assets/skills/SpiderWeb.png', description: '거미줄 폭격이 적을 제압합니다.' },
+    baseStats: { attack: 101, hp: 1060, gauge: 100 },
+    shopPrice: 3100,
+    rarity: '에픽'
+  },
+  {
+    id: 'hulk',
+    name: '헐크',
+    englishName: 'Hulk',
+    image: 'assets/skins/Hulk.png',
+    role: '근접',
+    classType: 'auto',
+    attackType: 'melee',
+    skill1: { name: '분노 강타', image: 'assets/skills/Forearm.png', description: '거대한 주먹으로 강하게 내리칩니다.' },
+    ultimate: { name: '헐크 스매시', image: 'assets/skills/Forearm.png', description: '짧은 시간 광역 강타를 반복합니다.' },
+    baseStats: { attack: 104, hp: 1125, gauge: 100 },
+    shopPrice: 3800,
+    rarity: '전설'
+  },
+  {
+    id: 'hashirama',
+    name: '하시라마',
+    englishName: 'Hashirama',
+    image: 'assets/skins/Hashirama.png',
+    role: '근접',
+    classType: 'control',
+    attackType: 'melee',
+    skill1: { name: '목둔 창', image: 'assets/skills/ThousandHands.png', description: '목둔 창을 무작위로 날립니다.' },
+    ultimate: { name: '천수관음', image: 'assets/skills/ThousandHands.png', description: '천수관음 이미지가 무작위로 날아다니며 큰 피해를 줍니다.' },
+    baseStats: { attack: 102, hp: 1095, gauge: 100 },
+    shopPrice: 4200,
+    rarity: '전설'
+  },
+  {
+    id: 'madara',
+    name: '마다라',
+    englishName: 'Madara',
+    image: 'assets/skins/Madara.png',
+    role: '근접',
+    classType: 'control',
+    attackType: 'melee',
+    skill1: { name: '화염탄', image: 'assets/skills/Susanoo.png', description: '강한 화염탄을 발사합니다.' },
+    ultimate: { name: '스사노오', image: 'assets/skills/Susanoo.png', description: '스사노오 이미지가 무작위로 날아다니며 큰 피해를 줍니다.' },
+    baseStats: { attack: 103, hp: 1080, gauge: 100 },
+    shopPrice: 4300,
+    rarity: '전설'
+  },
+  {
+    id: 'kakashi',
+    name: '카카시',
+    englishName: 'Kakashi',
+    image: 'assets/skins/Kakashi.png',
+    role: '근접',
+    classType: 'control',
+    attackType: 'melee',
+    skill1: { name: '뇌절', image: 'assets/skills/Chidori.png', description: '뇌절 돌진으로 적에게 접근합니다.' },
+    ultimate: { name: '뇌절', image: 'assets/skills/Chidori.png', description: '뇌절이 연속 발동하며 적을 추격합니다.' },
+    baseStats: { attack: 102, hp: 1065, gauge: 100 },
+    shopPrice: 3350,
+    rarity: '에픽'
+  },
+  {
+    id: 'caitlyn',
+    name: '케이틀린',
+    englishName: 'Caitlyn',
+    image: 'assets/skins/Caitlyn.png',
+    role: '원거리',
+    classType: 'control',
+    attackType: 'projectile',
+    skill1: { name: '요들 덫', image: 'assets/skills/SpiderWeb.png', description: '좁은 범위에 느린 탄을 발사합니다.' },
+    ultimate: { name: '헤드샷', image: 'assets/skills/Shuriken.png', description: '강화된 2발의 고속 투사체를 발사합니다.' },
+    baseStats: { attack: 103, hp: 1055, gauge: 100 },
+    shopPrice: 3700,
+    rarity: '에픽'
+  }
+];
+
+
+const EXTRA_CHARACTER_STATS = {
+  luffy: { attackSpeed: 1.00, speed: 3.15, critChance: 12 },
+  zoro: { attackSpeed: 0.98, speed: 3.10, critChance: 13 },
+  sanji: { attackSpeed: 1.04, speed: 3.20, critChance: 11 },
+  blitzcrank: { attackSpeed: 0.96, speed: 3.00, critChance: 10 },
+  choijun: { attackSpeed: 1.00, speed: 3.12, critChance: 11 },
+  yoonsung: { attackSpeed: 1.01, speed: 3.10, critChance: 11 },
+  zed: { attackSpeed: 1.05, speed: 3.22, critChance: 13 },
+  taric: { attackSpeed: 0.95, speed: 3.05, critChance: 9 },
+  batohtani: { attackSpeed: 0.97, speed: 3.10, critChance: 12 },
+  ngannou: { attackSpeed: 0.92, speed: 3.02, critChance: 14 },
+  duolingo: { attackSpeed: 1.03, speed: 3.14, critChance: 10 },
+  spiderman: { attackSpeed: 1.04, speed: 3.24, critChance: 12 },
+  hulk: { attackSpeed: 0.90, speed: 2.98, critChance: 11 },
+  hashirama: { attackSpeed: 0.98, speed: 3.08, critChance: 11 },
+  madara: { attackSpeed: 1.00, speed: 3.10, critChance: 13 },
+  kakashi: { attackSpeed: 1.04, speed: 3.18, critChance: 13 },
+  caitlyn: { attackSpeed: 0.98, speed: 3.08, critChance: 14 },
+};
+
+CHARACTER_LIST.forEach((character) => {
+  const extra = EXTRA_CHARACTER_STATS[character.id] || { attackSpeed: 1, speed: 3, critChance: 10 };
+  character.baseStats = {
+    hp: character.baseStats.hp,
+    attack: character.baseStats.attack,
+    attackSpeed: extra.attackSpeed,
+    speed: extra.speed,
+    critChance: extra.critChance,
+    gauge: character.baseStats.gauge || 100,
+  };
+  character.battle = {
+    projectileSpeed: character.attackType === 'projectile' ? 5.0 + extra.speed * 0.22 : 0,
+    projectileRange: character.attackType === 'projectile' ? 560 + extra.speed * 22 : 0,
+    projectileBounce: character.attackType === 'projectile' ? 2 : 0,
+    projectileCount: character.attackType === 'projectile' ? 3 : 0,
+    shotgunAngleDeg: 10,
+    meleeRange: character.attackType === 'melee' ? 80 : 0,
+    autoAttackCooldownMs: Math.round(1000 / extra.attackSpeed),
+    skill1CooldownMs: 0,
+    blinkCooldownMs: 10000,
+    ultimateCooldownMs: 20000,
+    ultimateProjectileLimit: 6,
+  };
+});
+
+export const BATTLE_NUMBERS = {
+  tickRate: 30,
+  serverFrameMs: 33.33,
+  renderFpsTarget: 60,
+  inputSendRate: 20,
+  inputSendMs: 50,
+  snapshotSendRate: 15,
+  snapshotSendMs: 66.67,
+  controlTimeLimitSeconds: 180,
+  controlPlayersPerSide: 1,
+  autoPlayersPerSide: 2,
+  startLevel: 1,
+  maxLevel: 10,
+  levelUpEverySeconds: 15,
+  statGrowthPerLevel: { hpPercent: 3, attackPercent: 2.5, speedPercent: 0.7, attackSpeedPercent: 1, critChanceFlat: 0.4 },
+  baseCharacterRadius: 34,
+  projectileRadius: 12,
+  projectileBaseSpeed: 5.6,
+  projectileBaseRange: 620,
+  rangedProjectileCount: 3,
+  rangedShotgunAngleDeg: 10,
+  homingTurnRateDegPerSecond: 180,
+  meleeContactDamageIntervalMs: 900,
+  meleeDashSpeedMultiplier: 2.2,
+  blinkDistance: 180,
+  skillGaugeMax: 100,
+  skill1GaugeGainPerSecond: 18,
+  ultimateGaugeGainPerSecond: 8,
+  ultimateAutoFireEverySeconds: 20,
+  ultimateProjectileLimit: 6,
+  dungeonTimeLimitSeconds: 40,
+  dungeonTargetClearSeconds: 25,
+  autoContactStickSeconds: 2,
+  rangedAutoFireIntervalMs: 1180,
+  wallBounceEnergyLoss: 0,
+  autoModeInitialLaunchSpeed: 3.7,
+  autoModeBossHpMultiplier: 5,
+  rankedWinPointMin: 10,
+  rankedWinPointMax: 15,
+  rankedLosePointMin: 5,
+  rankedLosePointMax: 7,
+  rankedWinGold: 50,
+  characterPackPrice: 300,
+};
+
+
+export const CHARACTER_MAP = Object.fromEntries(CHARACTER_LIST.map((character) => [character.id, character]));
+
+export const RANK_TIERS = ['브론즈', '실버', '골드', '플레티넘', '다이아'];
+
+export const getRandomCharacterId = (excludeIds = []) => {
+  const available = CHARACTER_LIST.filter((character) => !excludeIds.includes(character.id));
+  const list = available.length ? available : CHARACTER_LIST;
+  return list[Math.floor(Math.random() * list.length)].id;
+};
+
+export const getTierFromPoints = (points = 0) => {
+  const tierIndex = Math.min(RANK_TIERS.length - 1, Math.floor(Math.max(points, 0) / 50));
+  return RANK_TIERS[tierIndex];
+};

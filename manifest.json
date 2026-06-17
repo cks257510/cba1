@@ -1,0 +1,9 @@
+{
+  "name": "캐릭터 난투",
+  "short_name": "캐릭터난투",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#090c10",
+  "theme_color": "#090c10",
+  "icons": []
+}

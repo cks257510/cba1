@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>캐릭터 난투 Offline Demo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app"></div>
+<script>
+(function(){
+  const characters = [
+    ['luffy','루피','Luffy.png','고무고무'], ['zoro','조로','Zoro.png','호랑이 사냥'],
+    ['sanji','상디','Sanji.png','연속 킥'], ['blitzcrank','블리츠크랭크','Blitzcrank.png','그랩'],
+    ['choijun','최준','ChoiJun.png','근성 폭발'], ['yoonsung','윤성','YoonSung.png','팔뚝'],
+    ['zed','제드','Zed.png','표창'], ['taric','타릭','Taric.png','타릭기절'],
+    ['batohtani','빠따는 오타니','BatOhtani.png','빠따'], ['ngannou','은가누','Ngannou.png','파워 러시'],
+    ['duolingo','듀오링고','Duolingo.png','집요한 추적'], ['spiderman','스파이더맨','SpiderMan.png','거미줄'],
+    ['hulk','헐크','Hulk.png','헐크 스매시'], ['hashirama','하시라마','Hashirama.png','천수관음'],
+    ['madara','마다라','Madara.png','스사노오'], ['kakashi','카카시','Kakashi.png','뇌절']
+  ];
+  const state = JSON.parse(localStorage.getItem('character_pvp_offline') || 'null') || {
+    nickname:'게스트', gold:0, title:'신입', dev:false, active:'luffy', owned:{luffy:{enh:0}}, tab:'main',
+    stats:{kills:0,damage:0,tank:0,control:0,auto:0,wins:0,dungeon:0}
+  };
+  const $ = (s)=>document.querySelector(s);
+  const save=()=>localStorage.setItem('character_pvp_offline', JSON.stringify(state));
+  const ch=(id)=>characters.find(x=>x[0]===id)||characters[0];
+  const img=(c)=>`<div class="avatar-token"><img src="assets/skins/${c[2]}" onerror="this.remove()"><span class="avatar-fallback">${c[1].slice(0,2)}</span></div>`;
+  const btn=(tab,label)=>`<button class="nav-btn ${state.tab===tab?'active':''}" data-tab="${tab}">${label}</button>`;
+  function render(){
+    const active=ch(state.active);
+    let content='';
+    if(state.tab==='main') content=`<div class="grid-2">
+      <button class="feature-card btn secondary" data-tab="control"><h3>컨트롤모드</h3><p class="feature-meta">1대1 AI 경쟁전 / 전투 UI 확인</p></button>
+      <button class="feature-card btn secondary" data-tab="auto"><h3>오토모드</h3><p class="feature-meta">2대2 AI 경쟁전 / 던전</p></button>
+      <button class="feature-card btn secondary" data-tab="ranking"><h3>랭킹</h3><p class="feature-meta">오프라인 데모 통계</p></button>
+      <button class="feature-card btn secondary" data-tab="mission"><h3>미션</h3><p class="feature-meta">업적/칭호 보상</p></button>
+    </div>`;
+    if(state.tab==='shop') content=`<div class="stack"><div class="feature-card highlight"><h2>상점</h2><p class="feature-meta">캐릭터팩 500골드. 오프라인 데모에서는 개발자모드로 골드를 추가하세요.</p><button class="btn primary" id="pack">캐릭터팩 개봉</button></div><div class="character-grid">${characters.map(c=>`<div class="character-card">${img(c)}<h3>${c[1]}</h3><p class="character-sub">${c[3]}</p><button class="btn secondary small" data-buy="${c[0]}">${state.owned[c[0]]?'보유중':'구매 3000G'}</button></div>`).join('')}</div></div>`;
+    if(state.tab==='squad') content=`<div class="character-grid">${Object.keys(state.owned).map(id=>{const c=ch(id);return `<div class="character-card ${state.active===id?'selected':''}">${img(c)}<h3>${c[1]}</h3><p class="character-sub">강화 +${state.owned[id].enh}</p><button class="btn primary small" data-active="${id}">대표 설정</button><button class="btn warning small" data-enh="${id}">강화 800G</button></div>`}).join('')}</div>`;
+    if(state.tab==='items') content=`<div class="feature-card highlight"><h2>아이템</h2><p class="feature-meta">아이템 인벤토리 뼈대 화면입니다.</p></div>`;
+    if(state.tab==='craft') content=`<div class="feature-card highlight"><h2>제작소</h2><p class="feature-meta">추후 조각/재료 제작 시스템 확장 영역입니다.</p></div>`;
+    if(state.tab==='control') content=`<div class="feature-card highlight"><h2>컨트롤모드</h2><p class="feature-meta">3분 제한 1대1 규칙. 현재는 AI 시뮬레이션입니다.</p><button class="btn primary" id="controlRank">경쟁전 AI 매치</button><button class="btn secondary" data-tab="battle">전투 UI 프리뷰</button></div>`;
+    if(state.tab==='auto') content=`<div class="feature-card highlight"><h2>오토모드</h2><p class="feature-meta">2대2 자동 전투, 던전, 도전 구조.</p><button class="btn primary" id="autoRank">오토 경쟁전</button><button class="btn secondary" id="dungeon">던전 도전</button></div>`;
+    if(state.tab==='ranking') content=`<div class="grid-4">${[['Kill',state.stats.kills],['Damage',state.stats.damage],['Tank',state.stats.tank],['Tier',state.stats.control+state.stats.auto]].map(x=>`<div class="stat-card"><div class="stat-label">${x[0]}</div><div class="stat-value">${x[1]}</div></div>`).join('')}</div>`;
+    if(state.tab==='mission') content=`<div class="character-grid"><div class="character-card"><h3>첫 사냥</h3><p>5킬 달성 / 사냥꾼 칭호 + 20G</p><button class="btn primary" id="mission1">보상 수령</button></div><div class="character-card"><h3>던전 개척자</h3><p>던전 5회 클리어 / 50G</p><button class="btn primary" id="mission2">보상 수령</button></div></div>`;
+    if(state.tab==='battle') content=`<div class="arena-shell" style="min-height:70vh"><div class="arena-field"><div class="arena-token friend" style="left:15%;top:45%"><img src="assets/skins/${active[2]}" onerror="this.remove()"></div><div class="arena-token enemy" style="right:15%;top:42%;left:auto"><img src="assets/skins/Madara.png" onerror="this.remove()"></div></div><div class="arena-hud"><div class="hud-grid"><div class="hud-card"><b>${active[1]}</b><div class="hp-bar"><span style="width:80%"></span></div><p>HP 800 / 1000 · 스킬게이지 40%</p></div><div class="hud-card"><b>상대</b><div class="hp-bar"><span style="width:65%"></span></div><p>HP 650 / 1000 · 스킬게이지 70%</p></div></div><button class="btn primary" data-tab="main">로비로 돌아가기</button></div></div>`;
+    document.getElementById('app').innerHTML=`<div class="page-shell"><div class="topbar"><div class="profile-panel panel"><div class="profile-head">${img(active)}<div><div class="tag-row"><span class="pill green">${state.title}</span><span class="pill">오프라인 데모</span></div><h2>${state.nickname}</h2><p class="profile-sub">Firebase 없이 file://로 실행 중</p></div></div></div><div class="gold-panel panel"><div class="stat-label">보유 골드</div><div class="gold-value">${state.gold} G</div></div></div><div class="lobby-layout"><aside class="side-nav"><div class="panel"><div class="nav-list">${btn('craft','제작소')}${btn('shop','상점')}${btn('main','메인')}${btn('squad','스쿼드')}${btn('items','아이템')}</div></div><div class="panel stack"><button class="btn ${state.dev?'danger':'primary'}" id="dev">${state.dev?'개발자모드 비활성화':'개발자모드 버튼'}</button>${state.dev?'<button class="btn secondary" id="gold">골드 +5000</button><button class="btn secondary" id="unlock">캐릭터 전부 해금</button>':''}<a class="btn secondary" href="index.html">온라인 실행 안내/모드</a></div></aside><main class="panel content-panel">${content}</main></div></div>`;
+    bind();
+  }
+  function toast(m){ alert(m); }
+  function bind(){
+    document.querySelectorAll('[data-tab]').forEach(e=>e.onclick=()=>{state.tab=e.dataset.tab;save();render();});
+    document.querySelectorAll('[data-buy]').forEach(e=>e.onclick=()=>{let id=e.dataset.buy;if(state.owned[id]) return toast('이미 보유중'); if(state.gold<3000)return toast('골드 부족'); state.gold-=3000; state.owned[id]={enh:0}; save(); render();});
+    document.querySelectorAll('[data-active]').forEach(e=>e.onclick=()=>{state.active=e.dataset.active;save();render();});
+    document.querySelectorAll('[data-enh]').forEach(e=>e.onclick=()=>{let id=e.dataset.enh;if(state.gold<800)return toast('골드 부족');state.gold-=800; if(Math.random()<0.65)state.owned[id].enh++; save(); render();});
+    const dev=$('#dev'); if(dev) dev.onclick=()=>{ if(!state.dev){let p=prompt('개발자 코드 입력'); if(p!=='2359')return toast('코드가 틀립니다');} state.dev=!state.dev; save(); render();};
+    const gold=$('#gold'); if(gold) gold.onclick=()=>{state.gold+=5000;save();render();};
+    const unlock=$('#unlock'); if(unlock) unlock.onclick=()=>{characters.forEach(c=>state.owned[c[0]]={enh:state.owned[c[0]]?.enh||0});save();render();};
+    const pack=$('#pack'); if(pack) pack.onclick=()=>{if(state.gold<500)return toast('골드 부족');state.gold-=500;let c=characters[Math.floor(Math.random()*characters.length)];state.owned[c[0]]={enh:state.owned[c[0]]?.enh||0};toast(c[1]+' 획득');save();render();};
+    const cr=$('#controlRank'); if(cr) cr.onclick=()=>{let win=Math.random()<0.55;state.stats.control=Math.max(0,state.stats.control+(win?12:-6));state.stats.kills+=win?1:0;state.stats.damage+=Math.floor(800+Math.random()*600);state.gold+=win?50:0;toast(win?'승리 +50G':'패배');save();render();};
+    const ar=$('#autoRank'); if(ar) ar.onclick=()=>{let win=Math.random()<0.55;state.stats.auto=Math.max(0,state.stats.auto+(win?12:-6));state.stats.kills+=win?2:0;state.stats.damage+=Math.floor(1200+Math.random()*800);state.gold+=win?50:0;toast(win?'승리 +50G':'패배');save();render();};
+    const dg=$('#dungeon'); if(dg) dg.onclick=()=>{let win=Math.random()<0.5;state.stats.dungeon+=win?1:0;state.gold+=win?50:0;toast(win?'던전 클리어 +50G':'던전 패배');save();render();};
+    const m1=$('#mission1'); if(m1) m1.onclick=()=>{if(state.stats.kills>=5){state.gold+=20;state.title='사냥꾼';toast('보상 수령');save();render();}else toast('아직 조건 미달');};
+    const m2=$('#mission2'); if(m2) m2.onclick=()=>{if(state.stats.dungeon>=5){state.gold+=50;state.title='던전 개척자';toast('보상 수령');save();render();}else toast('아직 조건 미달');};
+  }
+  render();
+})();
+</script>
+</body>
+</html>
